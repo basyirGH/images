@@ -1,0 +1,194 @@
+{
+    "tables": {
+        "category": {
+            "columns": {
+                "id": {
+                    "type": "bigint",
+                    "auto_increment": true,
+                    "not_null": true
+                },
+                "name": {
+                    "type": "varchar",
+                    "length": 255,
+                    "not_null": true,
+                    "unique": true
+                },
+                "line_color": {
+                    "type": "varchar",
+                    "length": 255,
+                    "not_null": true
+                }
+            },
+            "primary_key": [
+                "id"
+            ]
+        },
+        "user_": {
+            "columns": {
+                "id": {
+                    "type": "bigint",
+                    "auto_increment": true,
+                    "not_null": true
+                },
+                "email": {
+                    "type": "varchar",
+                    "length": 255
+                },
+                "full_name": {
+                    "type": "varchar",
+                    "length": 255
+                },
+                "password": {
+                    "type": "varchar",
+                    "length": 255
+                }
+            },
+            "primary_key": [
+                "id"
+            ]
+        },
+        "customer": {
+            "columns": {
+                "age": {
+                    "type": "int"
+                },
+                "gender": {
+                    "type": "varchar",
+                    "length": 255
+                },
+                "id": {
+                    "type": "bigint",
+                    "not_null": true
+                }
+            },
+            "primary_key": [
+                "id"
+            ],
+            "foreign_keys": {
+                "id": {
+                    "references": "user_",
+                    "column": "id"
+                }
+            }
+        },
+        "order_": {
+            "columns": {
+                "id": {
+                    "type": "bigint",
+                    "auto_increment": true,
+                    "not_null": true
+                },
+                "order_date": {
+                    "type": "datetime",
+                    "precision": 6,
+                    "not_null": true
+                },
+                "status": {
+                    "type": "enum",
+                    "values": [
+                        "CANCELED",
+                        "COMPLETED",
+                        "PENDING",
+                        "SHIPPED"
+                    ]
+                },
+                "total_amount": {
+                    "type": "decimal",
+                    "precision": 15,
+                    "scale": 2,
+                    "not_null": true
+                },
+                "customer_id": {
+                    "type": "bigint"
+                }
+            },
+            "primary_key": [
+                "id"
+            ],
+            "foreign_keys": {
+                "customer_id": {
+                    "references": "customer",
+                    "column": "id"
+                }
+            }
+        },
+        "product": {
+            "columns": {
+                "id": {
+                    "type": "bigint",
+                    "auto_increment": true,
+                    "not_null": true
+                },
+                "description": {
+                    "type": "varchar",
+                    "length": 1000
+                },
+                "name": {
+                    "type": "varchar",
+                    "length": 255,
+                    "not_null": true
+                },
+                "price": {
+                    "type": "decimal",
+                    "precision": 15,
+                    "scale": 2,
+                    "not_null": true
+                },
+                "stock_quantity": {
+                    "type": "int",
+                    "not_null": true
+                },
+                "category_id": {
+                    "type": "bigint"
+                }
+            },
+            "primary_key": [
+                "id"
+            ],
+            "foreign_keys": {
+                "category_id": {
+                    "references": "category",
+                    "column": "id"
+                }
+            }
+        },
+        "order_item": {
+            "columns": {
+                "id": {
+                    "type": "bigint",
+                    "auto_increment": true,
+                    "not_null": true
+                },
+                "price_per_unit": {
+                    "type": "decimal",
+                    "precision": 15,
+                    "scale": 2,
+                    "not_null": true
+                },
+                "quantity": {
+                    "type": "int",
+                    "not_null": true
+                },
+                "order_id": {
+                    "type": "bigint"
+                },
+                "product_id": {
+                    "type": "bigint"
+                }
+            },
+            "primary_key": [
+                "id"
+            ],
+            "foreign_keys": {
+                "order_id": {
+                    "references": "order_",
+                    "column": "id"
+                },
+                "product_id": {
+                    "references": "product",
+                    "column": "id"
+                }
+            }
+        }
+    }
+}
